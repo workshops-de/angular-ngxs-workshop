@@ -1,0 +1,30 @@
+<mat-card *ngIf="content">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title data-test="title">{{ content.title }}</mat-card-title>
+      <mat-card-subtitle>{{ content.subtitle }}</mat-card-subtitle>
+    </mat-card-header>
+    <img
+      data-test="book-image"
+      class="book-cover-thumb"
+      [src]="
+        content.cover ||
+        'https://via.placeholder.com/468x800?text=No%20cover%20available'
+      "
+      [attr.alt]="content.title"
+    />
+    <mat-card-content>
+      <p id="abstract">
+        {{ content.abstract }}
+      </p>
+      <p class="numPages">
+        {{ content.numPages }}
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <a data-test="detail-link" mat-button [routerLink]="[content.isbn]"
+        >DETAILS</a
+      >
+    </mat-card-actions>
+  </mat-card>
+  

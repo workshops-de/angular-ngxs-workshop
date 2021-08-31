@@ -1,0 +1,23 @@
+<mat-card *ngIf="book$ | async as book">
+  <mat-card-header>
+    <mat-card-title>{{ book.title }}</mat-card-title>
+    <mat-card-subtitle>{{ book.author }}</mat-card-subtitle>
+  </mat-card-header>
+  <img
+    mat-card-image
+    [src]="
+      book.cover ||
+      'https://via.placeholder.com/468x800?text=No%20cover%20available'
+    "
+    class="book-cover"
+    alt="book cover"
+  />
+  <mat-card-content>
+    <p>
+      {{ book.subtitle }}
+    </p>
+    <p>
+      {{ book.abstract }}
+    </p>
+  </mat-card-content>
+</mat-card>
