@@ -9,7 +9,8 @@ import {
 import { tap } from 'rxjs/operators';
 import { Book } from '../models/book';
 import { BookApiService } from '../services/book-api.service';
-import { NewBookState } from './new-book.state';
+import { NewBookActions, NewBookState } from './new-book.state';
+import { patch, append } from '@ngxs/store/operators';
 
 export namespace BooksActions {
   export class LoadAll {
@@ -50,6 +51,15 @@ export class BooksState {
           entities: books,
         }))
       )
+    );
+  }
+
+  @Action(NewBookActions.Created)
+  created(ctx: StateContext<BooksStateModel>, action: NewBookActions.Created) {
+    ctx.setState(
+      patch({
+        entities: append([action.book]),
+      })
     );
   }
 

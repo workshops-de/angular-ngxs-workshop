@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Navigate } from '@ngxs/router-plugin';
 import { Action, Selector, State, StateContext } from '@ngxs/store';
+import { Observable } from 'rxjs';
+import { concatMap } from 'rxjs/operators';
+import { Book } from '../models/book';
+import { BookApiService } from '../services/book-api.service';
 
 export enum NewBookStep {
   info = 'info',
@@ -46,6 +51,11 @@ export namespace NewBookActions {
   export class SubmitStep {
     static type = '[New Book] Submit Step';
     constructor(readonly step: NewBookStep) {}
+  }
+
+  export class Created {
+    static type = '[New Book] Created';
+    constructor(readonly book: Book) {}
   }
 }
 
@@ -103,7 +113,7 @@ export class NewBookState {
   submitStep(
     ctx: StateContext<NewBookStateModel>,
     action: NewBookActions.SubmitStep
-  ) {
+  ): void | Observable<any> {
     const state = ctx.getState();
     const steps = Object.values(NewBookStep);
     const nextStep = steps[steps.indexOf(action.step) + 1];
@@ -112,6 +122,34 @@ export class NewBookState {
         ...state,
         step: nextStep,
       });
+    } else {
+      const invalidStep = steps.find((step) => {
+        const status = state[step].status;
+        return status !== 'VALID';
+      });
+      if (invalidStep) {
+        ctx.setState({
+          ...state,
+          step: invalidStep,
+        });
+      } else {
+        return this.bookApi
+          .create({
+            ...state.info.model,
+            price: state.price.model.price.toString(),
+          })
+          .pipe(
+            concatMap((created) => {
+              ctx.setState(defaults);
+              return ctx.dispatch([
+                new NewBookActions.Created(created),
+                new Navigate(['/books']),
+              ]);
+            })
+          );
+      }
     }
   }
+
+  constructor(private bookApi: BookApiService) {}
 }
