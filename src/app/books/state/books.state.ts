@@ -9,6 +9,7 @@ import {
 import { tap } from 'rxjs/operators';
 import { Book } from '../models/book';
 import { BookApiService } from '../services/book-api.service';
+import { NewBookState } from './new-book.state';
 
 export namespace BooksActions {
   export class LoadAll {
@@ -25,6 +26,7 @@ export interface BooksStateModel {
   defaults: {
     entities: [],
   },
+  children: [NewBookState],
 })
 @Injectable()
 export class BooksState {
