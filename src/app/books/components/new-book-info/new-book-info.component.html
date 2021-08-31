@@ -1,0 +1,48 @@
+<form [formGroup]="infoForm" ngxsForm="books.new.info" (ngSubmit)="submit()">
+  <mat-form-field>
+    <input matInput formControlName="isbn" placeholder="ISBN" required />
+    <mat-error *ngIf="infoForm.get('isbn')?.hasError('minlength')">
+      ISBN has to be at least 3 characters long.
+    </mat-error>
+    <mat-error *ngIf="infoForm.get('isbn')?.hasError('required')">
+      ISBN is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      matInput
+      type="number"
+      formControlName="numPages"
+      placeholder="Number of Pages"
+      required
+    />
+    <mat-error *ngIf="infoForm.get('isbn')?.hasError('minlength')">
+      Book needs at least one page
+    </mat-error>
+    <mat-error *ngIf="infoForm.get('isbn')?.hasError('required')">
+      Number of pages is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="title" placeholder="Title" required />
+    <mat-error *ngIf="infoForm.get('title')?.hasError('required')">
+      Title is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput formControlName="author" placeholder="Author" required />
+    <mat-error *ngIf="infoForm.get('author')?.hasError('required')">
+      Author is required
+    </mat-error>
+  </mat-form-field>
+  <div>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!infoForm.valid"
+      type="submit"
+    >
+      Next
+    </button>
+  </div>
+</form>
