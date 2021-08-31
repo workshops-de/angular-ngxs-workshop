@@ -1,0 +1,32 @@
+<form
+  *ngIf="priceForm$ | async as priceForm"
+  [formGroup]="priceForm"
+  ngxsForm="books.new.price"
+  (ngSubmit)="submit()"
+>
+  <mat-form-field>
+    <input
+      matInput
+      type="number"
+      formControlName="price"
+      placeholder="Price"
+      required
+    />
+    <mat-error *ngIf="priceForm.get('price')?.hasError('min')">
+      Price is too low ({{ priceForm.get("price")?.getError("min").min }})
+    </mat-error>
+    <mat-error *ngIf="priceForm.get('price')?.hasError('required')">
+      Price is required
+    </mat-error>
+  </mat-form-field>
+  <div>
+    <button
+      mat-raised-button
+      color="primary"
+      [disabled]="!priceForm.valid"
+      type="submit"
+    >
+      Submit
+    </button>
+  </div>
+</form>

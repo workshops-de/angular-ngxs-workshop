@@ -18,6 +18,7 @@ import { NewBookInfoComponent } from './components/new-book-info/new-book-info.c
 import { NewBookComponent } from './components/new-book/new-book.component';
 import { BooksState } from './state/books.state';
 import { NewBookState } from './state/new-book.state';
+import { NewBookPriceComponent } from './components/new-book-price/new-book-price.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { NewBookState } from './state/new-book.state';
     BookDetailComponent,
     NewBookComponent,
     NewBookInfoComponent,
+    NewBookPriceComponent,
   ],
   imports: [
     CommonModule,

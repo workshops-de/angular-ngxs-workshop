@@ -6,6 +6,6 @@
   </mat-button-toggle-group>
   <ng-container [ngSwitch]="step">
     <ws-new-book-info *ngSwitchCase="NewBookStep.info"></ws-new-book-info>
-    <p *ngSwitchCase="NewBookStep.price">Price Step Active</p>
+    <ws-new-book-price *ngSwitchCase="NewBookStep.price"></ws-new-book-price>
   </ng-container>
 </ng-container>

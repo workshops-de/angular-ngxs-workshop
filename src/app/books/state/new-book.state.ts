@@ -20,9 +20,21 @@ export interface NewBookInfoStep {
   };
 }
 
+export interface NewBookPriceStep {
+  model: {
+    price: number;
+  };
+  dirty: boolean;
+  status: string;
+  errors: {
+    [key: string]: any;
+  };
+}
+
 export interface NewBookStateModel {
   step: NewBookStep;
   info: NewBookInfoStep;
+  price: NewBookPriceStep;
 }
 
 export namespace NewBookActions {
@@ -50,6 +62,14 @@ const defaults: NewBookStateModel = {
     status: '',
     errors: {},
   },
+  price: {
+    model: {
+      price: 0,
+    },
+    dirty: false,
+    status: '',
+    errors: {},
+  },
 };
 
 @State<NewBookStateModel>({
@@ -61,6 +81,11 @@ export class NewBookState {
   @Selector()
   static step(state: NewBookStateModel) {
     return state.step;
+  }
+
+  @Selector()
+  static info(state: NewBookStateModel) {
+    return state.info;
   }
 
   @Action(NewBookActions.SelectStep)
