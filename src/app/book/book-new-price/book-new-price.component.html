@@ -1,0 +1,15 @@
+<form *ngIf="form$ | async as form" [formGroup]="form" ngxsForm="bookCollection.new.price" (ngSubmit)="submit()">
+  <mat-form-field>
+    <mat-label>Price</mat-label>
+    <input matInput formControlName="price" placeholder="Price" type="number" />
+    <mat-error *ngIf="form.hasError('required', 'price')"> Price is required </mat-error>
+    <mat-error *ngIf="form.hasError('min', 'price')">
+      Price is too low (minimum is {{ form.getError('min', 'price').min }})
+    </mat-error>
+  </mat-form-field>
+
+  <div class="form-actions">
+    <button mat-button (click)="cancel()" type="button">Back</button>
+    <button mat-raised-button color="primary" [disabled]="!form.valid" type="submit">Save</button>
+  </div>
+</form>

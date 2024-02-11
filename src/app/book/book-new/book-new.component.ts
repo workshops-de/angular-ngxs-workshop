@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { MatButtonToggle, MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { NewBookStep } from '../state/new-book.model';
 import { BookNewInfoComponent } from '../book-new-info/book-new-info.component';
+import { BookNewPriceComponent } from '../book-new-price/book-new-price.component';
 
 @Component({
   selector: 'ws-book-new',
@@ -22,7 +23,8 @@ import { BookNewInfoComponent } from '../book-new-info/book-new-info.component';
     MatButtonToggle,
     NgSwitch,
     NgSwitchCase,
-    BookNewInfoComponent
+    BookNewInfoComponent,
+    BookNewPriceComponent
   ]
 })
 export class BookNewComponent {

@@ -18,6 +18,14 @@ const defaults: NewBookStateModel = {
     dirty: false,
     status: '',
     errors: {}
+  },
+  price: {
+    model: {
+      price: 0
+    },
+    dirty: false,
+    status: '',
+    errors: {}
   }
 };
 
