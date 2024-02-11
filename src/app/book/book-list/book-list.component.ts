@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
 import { BookCardComponent } from '../book-card/book-card.component';
 import { AsyncPipe, NgFor } from '@angular/common';
+import { Select } from '@ngxs/store';
+import { BookCollectionState } from '../state/book-collection.state';
 
 @Component({
   selector: 'ws-book-list',
@@ -13,9 +14,6 @@ import { AsyncPipe, NgFor } from '@angular/common';
   imports: [NgFor, BookCardComponent, AsyncPipe]
 })
 export class BookListComponent {
-  protected books$: Observable<Book[]>;
-
-  constructor(private readonly bookService: BookApiService) {
-    this.books$ = this.bookService.getAll();
-  }
+  @Select(BookCollectionState.entities)
+  protected books$!: Observable<Book[]>;
 }

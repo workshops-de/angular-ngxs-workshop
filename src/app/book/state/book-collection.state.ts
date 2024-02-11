@@ -1,4 +1,4 @@
-import { Action, State, StateContext } from '@ngxs/store';
+import { Action, createSelector, Selector, State, StateContext } from '@ngxs/store';
 import { Injectable } from '@angular/core';
 import { BookLoadAll } from './book-collection.actions';
 import { BookCollectionStateModel } from './book-collection.model';
@@ -54,6 +54,17 @@ const books: Book[] = [
 })
 @Injectable()
 export class BookCollectionState {
+  @Selector()
+  static entities(state: BookCollectionStateModel) {
+    return state.entities;
+  }
+
+  static entity(isbn: string) {
+    return createSelector([BookCollectionState], (state: BookCollectionStateModel) => {
+      return state.entities.find(entity => entity.isbn === isbn);
+    });
+  }
+
   @Action(BookLoadAll)
   loadAll(ctx: StateContext<BookCollectionStateModel>) {
     const state = ctx.getState();

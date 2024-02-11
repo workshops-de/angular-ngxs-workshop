@@ -1,6 +1,6 @@
 import { Component, DestroyRef, Input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, filter, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { BookApiService } from '../book-api.service';
 import { Book } from '../models';
@@ -10,6 +10,8 @@ import { MatError, MatFormField } from '@angular/material/form-field';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { BookCollectionState } from '../state/book-collection.state';
+import { Store } from '@ngxs/store';
 
 @Component({
   selector: 'ws-book-edit',
@@ -35,12 +37,14 @@ export class BookEditComponent {
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly bookService: BookApiService,
-    private readonly destroyRef: DestroyRef
+    private readonly destroyRef: DestroyRef,
+    private readonly store: Store
   ) {}
 
   @Input({ required: true })
   set isbn(isbn: string) {
-    this.book$ = this.bookService.getByIsbn(isbn).pipe(
+    this.book$ = this.store.select(BookCollectionState.entity(isbn)).pipe(
+      filter((book): book is Book => !!book),
       tap(book => {
         this.form.setValue({
           title: book.title,
