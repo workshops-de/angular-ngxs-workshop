@@ -5,6 +5,8 @@ import { BookCollectionStateModel } from './book-collection.model';
 import { BookApiService } from '../book-api.service';
 import { tap } from 'rxjs/operators';
 import { NewBookState } from './new-book.state';
+import { NewBookCreated } from './new-book.actions';
+import { append, patch } from '@ngxs/store/operators';
 
 @State<BookCollectionStateModel>({
   name: 'bookCollection',
@@ -35,6 +37,15 @@ export class BookCollectionState {
           entities: books
         }))
       )
+    );
+  }
+
+  @Action(NewBookCreated)
+  created(ctx: StateContext<BookCollectionStateModel>, action: NewBookCreated) {
+    ctx.setState(
+      patch({
+        entities: append([action.book])
+      })
     );
   }
 
