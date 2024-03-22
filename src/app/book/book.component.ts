@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Store } from '@ngxs/store';
+import { BookLoadAll } from './state/book-collection.actions';
 
 @Component({
   selector: 'ws-book',
@@ -7,4 +9,9 @@ import { RouterOutlet } from '@angular/router';
   standalone: true,
   imports: [RouterOutlet]
 })
-export class BookComponent {}
+export class BookComponent implements OnInit {
+  store = inject(Store);
+  ngOnInit(): void {
+    this.store.dispatch(new BookLoadAll());
+  }
+}
