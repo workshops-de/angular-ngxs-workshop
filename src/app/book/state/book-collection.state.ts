@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Action, State, StateContext } from '@ngxs/store';
+import { Action, Selector, State, StateContext, createSelector } from '@ngxs/store';
 import { BookLoadAll } from './book-collection.actions';
 import { BookCollectionStateModel } from './book-collection.model';
 import { Book } from '../models';
+import { Observable } from 'rxjs';
 
 const booksMock: Book[] = [
   {
@@ -56,5 +57,14 @@ export class BookCollectionState {
   @Action(BookLoadAll)
   loadAll(ctx: StateContext<BookCollectionStateModel>, action: BookLoadAll) {
     ctx.setState(state => ({ ...state, entities: booksMock }));
+  }
+
+  @Selector()
+  static entities(state: BookCollectionStateModel): Book[] {
+    return state.entities;
+  }
+
+  static entity(isbn: string): (books: Book[]) => Book | undefined {
+    return createSelector([BookCollectionState.entities], (books: Book[]) => books.find(book => book.isbn === isbn));
   }
 }
