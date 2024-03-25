@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Action, Selector, State, StateContext, createSelector } from '@ngxs/store';
 import { BookLoadAll } from './book-collection.actions';
 import { BookCollectionStateModel } from './book-collection.model';
 import { Book } from '../models';
-import { Observable } from 'rxjs';
+import { Observable, catchError, of, retry, tap } from 'rxjs';
+import { BookApiService } from '../book-api.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const booksMock: Book[] = [
   {
@@ -54,9 +56,24 @@ const booksMock: Book[] = [
 })
 @Injectable()
 export class BookCollectionState {
+  service = inject(BookApiService);
+  snackBar = inject(MatSnackBar);
   @Action(BookLoadAll)
   loadAll(ctx: StateContext<BookCollectionStateModel>, action: BookLoadAll) {
-    ctx.setState(state => ({ ...state, entities: booksMock }));
+    return this.service.getAll().pipe(
+      retry({ delay: 2500, count: 2 }),
+      catchError(error => {
+        this.snackBar.open('Sie sehen alte Daten!');
+        return of(booksMock);
+      }),
+      tap({
+        next: books => ctx.setState(state => ({ ...state, entities: books })),
+        error: err => {
+          console.log(err);
+          this.snackBar.open('Ouch! ' + err.message);
+        }
+      })
+    );
   }
 
   @Selector()
