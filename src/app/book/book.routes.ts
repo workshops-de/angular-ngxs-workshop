@@ -6,12 +6,13 @@ import { BookListComponent } from './book-list/book-list.component';
 import { BookEditComponent } from './book-edit/book-edit.component';
 import { BookCollectionState } from './state/book-collection.state';
 import { provideStore } from '@ngxs/store';
+import { NewBookState } from './state/new-book.state';
 
 export const bookRoutes: Routes = [
   {
     path: '',
     component: BookComponent,
-    providers: [provideStore([BookCollectionState])],
+    providers: [provideStore([BookCollectionState, NewBookState])],
     children: [
       {
         path: '',

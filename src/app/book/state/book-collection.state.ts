@@ -6,6 +6,7 @@ import { Book } from '../models';
 import { Observable, catchError, of, retry, tap } from 'rxjs';
 import { BookApiService } from '../book-api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { NewBookState } from './new-book.state';
 
 const booksMock: Book[] = [
   {
@@ -52,7 +53,8 @@ const booksMock: Book[] = [
   name: 'bookCollection',
   defaults: {
     entities: []
-  }
+  },
+  children: [NewBookState]
 })
 @Injectable()
 export class BookCollectionState {
