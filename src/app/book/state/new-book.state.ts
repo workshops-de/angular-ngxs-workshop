@@ -28,6 +28,14 @@ export class NewBookSubmitStep {
       dirty: false,
       status: 'VALID',
       errors: {}
+    },
+    price: {
+      model: {
+        price: 0
+      },
+      dirty: false,
+      status: 'VALID',
+      errors: {}
     }
   }
 })
@@ -36,6 +44,10 @@ export class NewBookState {
   @Selector()
   static step(state: NewBookModel) {
     return state.step;
+  }
+  @Selector()
+  static numPages(state: NewBookModel) {
+    return state.info.model.numPages;
   }
 
   @Action(NewBookSelectStep)

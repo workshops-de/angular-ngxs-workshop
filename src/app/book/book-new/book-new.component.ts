@@ -14,6 +14,7 @@ import { Store } from '@ngxs/store';
 import { NewBookSelectStep, NewBookState } from '../state/new-book.state';
 import { NewBookStep } from '../state/new-book.model';
 import { BookNewInfoComponent } from './book-new-info.component';
+import { BookNewPriceComponent } from './book-new-price.component';
 
 @Component({
   selector: 'ws-book-new',
@@ -31,7 +32,8 @@ import { BookNewInfoComponent } from './book-new-info.component';
     MatLabel,
     MatButtonToggleModule,
     AsyncPipe,
-    BookNewInfoComponent
+    BookNewInfoComponent,
+    BookNewPriceComponent
   ]
 })
 export class BookNewComponent {

@@ -8,6 +8,7 @@ export enum NewBookStep {
 export interface NewBookModel {
   step: NewBookStep;
   info: NewBookInfoStep;
+  price: NewBookPriceStep;
 }
 
 export interface NewBookInfoStep {
@@ -19,6 +20,16 @@ export interface NewBookInfoStep {
     abstract: string;
     numPages: number;
     author: string;
+  };
+  dirty: boolean;
+  status: FormControlStatus;
+  errors: {
+    [key: string]: any;
+  };
+}
+export interface NewBookPriceStep {
+  model: {
+    price: number;
   };
   dirty: boolean;
   status: FormControlStatus;

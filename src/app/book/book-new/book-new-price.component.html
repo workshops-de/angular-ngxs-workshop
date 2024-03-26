@@ -1,0 +1,16 @@
+@if (form$ | async; as form) {
+  <form [formGroup]="form" ngxsForm="bookCollection.new.price">
+    <mat-form-field>
+      <mat-label>Price</mat-label>
+      <input matInput formControlName="price" placeholder="Price" [errorStateMatcher]="matcher" />
+      @if (form.hasError('min', 'price')) {
+        <mat-error> Price to low </mat-error>
+      }
+      @if (form.hasError('required', 'price')) {
+        <mat-error> Price is required </mat-error>
+      }
+    </mat-form-field>
+
+    {{ form.valid }}
+  </form>
+}
