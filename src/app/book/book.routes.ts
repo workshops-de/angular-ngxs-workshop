@@ -7,7 +7,6 @@ import { BookEditComponent } from './book-edit/book-edit.component';
 import { BookCollectionState } from './state/book-collection.state';
 import { provideStore } from '@ngxs/store';
 import { NewBookState } from './state/new-book.state';
-import { withNgxsFormPlugin } from '@ngxs/form-plugin';
 
 export const bookRoutes: Routes = [
   {

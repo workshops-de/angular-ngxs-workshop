@@ -6,7 +6,9 @@ import { Book } from '../models';
 import { Observable, catchError, of, retry, tap } from 'rxjs';
 import { BookApiService } from '../book-api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { NewBookState } from './new-book.state';
+import { NewBookCreated, NewBookState } from './new-book.state';
+import { NewBookModel } from './new-book.model';
+import { append, patch } from '@ngxs/store/operators';
 
 const booksMock: Book[] = [
   {
@@ -74,6 +76,15 @@ export class BookCollectionState {
           console.log(err);
           this.snackBar.open('Ouch! ' + err.message);
         }
+      })
+    );
+  }
+
+  @Action(NewBookCreated)
+  bookCreated(ctx: StateContext<BookCollectionStateModel>, action: NewBookCreated) {
+    ctx.setState(
+      patch({
+        entities: append([action.book])
       })
     );
   }
