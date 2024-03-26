@@ -13,6 +13,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Store } from '@ngxs/store';
 import { NewBookSelectStep, NewBookState } from '../state/new-book.state';
 import { NewBookStep } from '../state/new-book.model';
+import { BookNewInfoComponent } from './book-new-info.component';
 
 @Component({
   selector: 'ws-book-new',
@@ -29,39 +30,15 @@ import { NewBookStep } from '../state/new-book.model';
     RouterLink,
     MatLabel,
     MatButtonToggleModule,
-    AsyncPipe
+    AsyncPipe,
+    BookNewInfoComponent
   ]
 })
 export class BookNewComponent {
-  private readonly formBuilder = inject(FormBuilder);
-  protected form = this.formBuilder.nonNullable.group({
-    title: ['', [Validators.required]],
-    subtitle: [''],
-    author: ['', [Validators.required]],
-    abstract: [''],
-    isbn: ['', [Validators.required, Validators.minLength(3)]],
-    cover: [''],
-    numPages: [0, [Validators.required, Validators.min(10)]]
-  });
   private store = inject(Store);
   NewBookStep = NewBookStep;
-
-  private readonly router = inject(Router);
-  private readonly bookService = inject(BookApiService);
-  private readonly destroyRef = inject(DestroyRef);
-
   step$ = this.store.select(NewBookState.step);
   selectStep(nextStep: NewBookStep) {
     this.store.dispatch(new NewBookSelectStep(nextStep));
-  }
-  create() {
-    const book = { ...bookNa(), ...this.form.getRawValue() };
-    this.bookService
-      .create(book)
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        tap(() => this.router.navigateByUrl('/'))
-      )
-      .subscribe();
   }
 }

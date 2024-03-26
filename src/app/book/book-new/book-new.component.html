@@ -7,47 +7,7 @@
   </mat-button-toggle-group>
   @switch (step) {
     @case (NewBookStep.info) {
-      <form [formGroup]="form" (ngSubmit)="create()" class="book-new__form">
-        <mat-form-field>
-          <mat-label>ISBN</mat-label>
-          <input matInput formControlName="isbn" placeholder="ISBN" />
-          <mat-error *ngIf="form.hasError('minlength', 'isbn')"> ISBN has to be at least 3 characters long. </mat-error>
-          <mat-error *ngIf="form.hasError('required', 'isbn')"> ISBN is required </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Title</mat-label>
-          <input matInput formControlName="title" placeholder="Title" />
-          <mat-error *ngIf="form.hasError('required', 'title')"> Title is required </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Subtitle</mat-label>
-          <input matInput formControlName="subtitle" placeholder="Subtitle" />
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Author</mat-label>
-          <input matInput formControlName="author" placeholder="Author" />
-          <mat-error *ngIf="form.hasError('required', 'author')"> Author is required </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Abstract</mat-label>
-          <textarea matInput formControlName="abstract" placeholder="Abstract"></textarea>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Number of pages</mat-label>
-          <input matInput formControlName="numPages" placeholder="Number of pages" type="number" />
-          <mat-error *ngIf="form.hasError('required', 'numPages')"> Number of pages is required </mat-error>
-          <mat-error *ngIf="form.hasError('min', 'numPages')"> A minimum of 10 pages is required </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>Cover</mat-label>
-          <input matInput formControlName="cover" placeholder="Cover URL" />
-        </mat-form-field>
-
-        <div class="form-actions">
-          <button mat-button routerLink="/" type="button">Cancel</button>
-          <button mat-raised-button color="primary" [disabled]="!form.valid" type="submit">Save</button>
-        </div>
-      </form>
+      <ws-book-new-info />
     }
     @case (NewBookStep.price) {
       Price Step
