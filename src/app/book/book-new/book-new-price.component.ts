@@ -1,7 +1,7 @@
 import { AfterViewChecked, Component, inject } from '@angular/core';
 import { Store } from '@ngxs/store';
 import { map, tap } from 'rxjs';
-import { NewBookState } from '../state/new-book.state';
+import { NewBookState, NewBookSubmitStep } from '../state/new-book.state';
 import {
   FormControl,
   FormGroupDirective,
@@ -18,6 +18,7 @@ import { MatInput } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { NgxsFormDirective } from '@ngxs/form-plugin';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { NewBookStep } from '../state/new-book.model';
 
 /** Error when invalid control is dirty, touched, or submitted. */
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -47,6 +48,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class BookNewPriceComponent {
   matcher = new MyErrorStateMatcher();
   fb = inject(NonNullableFormBuilder);
+  private store = inject(Store);
   form$ = inject(Store)
     .select(NewBookState.numPages)
     .pipe(
@@ -59,4 +61,8 @@ export class BookNewPriceComponent {
       }),
       tap(form => form.updateValueAndValidity())
     );
+
+  submit(): void {
+    this.store.dispatch(new NewBookSubmitStep(NewBookStep.info));
+  }
 }

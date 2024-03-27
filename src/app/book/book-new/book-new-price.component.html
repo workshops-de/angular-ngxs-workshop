@@ -1,5 +1,5 @@
 @if (form$ | async; as form) {
-  <form [formGroup]="form" ngxsForm="bookCollection.new.price">
+  <form [formGroup]="form" ngxsForm="bookCollection.new.price" (ngSubmit)="submit()">
     <mat-form-field>
       <mat-label>Price</mat-label>
       <input matInput formControlName="price" placeholder="Price" [errorStateMatcher]="matcher" />
@@ -10,7 +10,7 @@
         <mat-error> Price is required </mat-error>
       }
     </mat-form-field>
-
+    <button mat-raised-button color="primary" [disabled]="!form.valid" type="submit">Submit</button>
     {{ form.valid }}
   </form>
 }
