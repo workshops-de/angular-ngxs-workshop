@@ -1,5 +1,6 @@
 // As a user I want to see the heading of my app.
 describe('As a user I want to', () => {
+  const randomISBN = Math.floor(1000000000000 + Math.random() * 900000);
   //   beforeEach(() => {});
   describe('see the heading of my app', () => {
     it('it should say Book Monkey', () => {
@@ -20,7 +21,7 @@ describe('As a user I want to', () => {
           //   click the create button
           cy.get('[routerlink="books/new"]').click();
           //   fill in the books formula
-          const randomISBN = Math.floor(1000000000000 + Math.random() * 900000);
+
           cy.get('[formControlName="isbn"]').type(randomISBN + '');
           cy.get('[formControlName="title"]').type(randomISBN + '');
           cy.get('[formControlName="subtitle"]').type(randomISBN + '');
@@ -46,5 +47,8 @@ describe('As a user I want to', () => {
           cy.get('@books').should('have.length', countBefore + 1);
         });
     });
+  });
+  after(() => {
+    cy.request('DELETE', 'http://localhost:4730/books/' + randomISBN);
   });
 });
