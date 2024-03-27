@@ -7,7 +7,10 @@
     "start:api": "bookmonkey-api",
     "build": "ng build",
     "test": "ng test",
-    "format": "prettier --write \"**/*.{js,json,css,scss,md,ts,html}\""
+    "format": "prettier --write \"**/*.{js,json,css,scss,md,ts,html}\"",
+    "e2e": "ng e2e",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run"
   },
   "private": true,
   "dependencies": {
@@ -38,6 +41,7 @@
     "@angular-eslint/template-parser": "^17.2.1",
     "@angular/cli": "^17.1.2",
     "@angular/compiler-cli": "^17.1.2",
+    "@cypress/schematic": "^2.5.1",
     "@types/jasmine": "~3.8.0",
     "@typescript-eslint/eslint-plugin": "^6.10.0",
     "@typescript-eslint/parser": "^6.10.0",
@@ -53,6 +57,7 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "prettier": "~3.2.4",
-    "typescript": "~5.3.3"
+    "typescript": "~5.3.3",
+    "cypress": "latest"
   }
 }
