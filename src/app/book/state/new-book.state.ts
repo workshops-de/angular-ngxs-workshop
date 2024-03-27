@@ -94,6 +94,7 @@ export class NewBookState {
           .create({
             ...bookNa(),
             ...state.info.model,
+            id: state.info.model.isbn,
             price: state.price.model.price
           })
           .pipe(
