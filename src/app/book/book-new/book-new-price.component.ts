@@ -63,6 +63,6 @@ export class BookNewPriceComponent {
     );
 
   submit(): void {
-    this.store.dispatch(new NewBookSubmitStep(NewBookStep.info));
+    this.store.dispatch(new NewBookSubmitStep(NewBookStep.price));
   }
 }

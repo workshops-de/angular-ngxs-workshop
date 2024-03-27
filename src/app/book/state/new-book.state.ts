@@ -72,6 +72,7 @@ export class NewBookState {
     const steps = Object.values(NewBookStep);
 
     const nextStep = steps[steps.indexOf(action.step) + 1];
+    console.log('===>', nextStep);
     if (nextStep) {
       ctx.setState({
         ...state,
@@ -82,6 +83,7 @@ export class NewBookState {
         const status = state[step].status;
         return status !== 'VALID';
       });
+      console.log('===>', invalidStep);
       if (invalidStep) {
         ctx.setState({
           ...state,
